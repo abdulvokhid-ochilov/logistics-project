@@ -7,25 +7,25 @@ import FooterImg from "../../assets/img/KakaoTalk_20210531_214254921.png";
 
 const MainPage = () => {
   return (
-    <main class="main-page">
-      <img class="capino-img" src={HeaderImg} alt="capino-img" />
+    <main className="main-page">
+      <img className="capino-img" src={HeaderImg} alt="capino-img" />
 
-      <div class="main-page-btns">
+      <div className="main-page-btns">
         <a href="/output">
-          <img class="btn-imgs" src={OutputButtonImg} alt="button" />
+          <img className="btn-imgs" src={OutputButtonImg} alt="button" />
         </a>
         <a href="/input">
-          <img class="btn-imgs" src={InputButtonImg} alt="button" />
+          <img className="btn-imgs" src={InputButtonImg} alt="button" />
         </a>
         <a href="/output/outputdb">
-          <img class="btn-imgs" src={OutputDBImg} alt="button" />
+          <img className="btn-imgs" src={OutputDBImg} alt="button" />
         </a>
         <a href="/input/inputdb">
-          <img class="btn-imgs" src={InputDBImg} alt="button" />
+          <img className="btn-imgs" src={InputDBImg} alt="button" />
         </a>
       </div>
-      <div class="main-footer">
-        <img class="logo-img" src={FooterImg} alt="footer" />
+      <div className="main-footer">
+        <img className="logo-img" src={FooterImg} alt="footer" />
       </div>
     </main>
   );

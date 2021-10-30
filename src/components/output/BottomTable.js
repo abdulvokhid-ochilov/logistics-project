@@ -34,7 +34,7 @@ const BottomTable = () => {
 
   return (
     <>
-      <table class="bottom-table out-bottom-table">
+      <table className="bottom-table out-bottom-table">
         <thead>
           <tr>
             <th>
@@ -53,15 +53,19 @@ const BottomTable = () => {
         </thead>
         <tbody>{TableBody.map((row) => row)}</tbody>
       </table>
-      <div class="plus-btn-cont">
+      <div className="plus-btn-cont">
         <button
           onClick={HandleRemove}
           type="button"
-          class="out-minus-btn minus-btn"
+          className="out-minus-btn minus-btn"
         >
           -
         </button>
-        <button onClick={HandleAdd} type="button" class="out-plus-btn plus-btn">
+        <button
+          onClick={HandleAdd}
+          type="button"
+          className="out-plus-btn plus-btn"
+        >
           +
         </button>
       </div>

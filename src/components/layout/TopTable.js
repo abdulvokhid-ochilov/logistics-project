@@ -1,6 +1,6 @@
 const TopTable = () => {
   return (
-    <table class="top-table">
+    <table className="top-table">
       <tbody>
         <tr>
           <th> 기사님 성함 </th>
