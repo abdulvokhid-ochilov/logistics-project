@@ -7,7 +7,7 @@ import MainPage from "./components/main/main-page";
 // import Contact from "./components/contact/contact";
 // import PostComp from "./components/posts/postComp";
 
-const App = () => (
+const Routes = () => (
   <BrowserRouter>
     <Switch>
       {/* <Route component={PostComp} path="/article/:id"></Route>
@@ -17,4 +17,4 @@ const App = () => (
   </BrowserRouter>
 );
 
-export default App;
+export default Routes;
