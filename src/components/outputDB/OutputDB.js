@@ -1,6 +1,6 @@
 import Header from "../layout/Header";
 import OutputDBForm from "./OutputDBForm";
-import OutputDBTable from "./OutputDBTable";
+import OutputDBTable from "../layout/DBTable";
 
 const OutputDB = () => {
   return (
