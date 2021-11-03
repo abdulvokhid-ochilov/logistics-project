@@ -7,6 +7,7 @@ import InputPage from "./components/input/InputPage";
 import OutputForm from "./components/output/OutputForm";
 import InputForm from "./components/input/InputForm";
 import OutputSearchPage from "./components/outputDB/OutputSearchPage";
+import InputSearchPage from "./components/InputDB/InputSearchPage";
 
 const App = () => (
   <BrowserRouter>
@@ -15,6 +16,7 @@ const App = () => (
       <Route component={Contact} path="/contact"></Route> */}
       <Route component={OutputSearchPage} path="/output/outputdb"></Route>
       <Route component={OutputForm} path="/output"></Route>
+      <Route component={InputSearchPage} path="/input/inputdb"></Route>
       <Route component={InputForm} path="/input"></Route>
       <Route component={MainPage} path="/"></Route>
     </Switch>
