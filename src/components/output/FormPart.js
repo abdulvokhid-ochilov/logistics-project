@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getProductByNum } from "../../api/index";
 
 const FormPart = (props) => {
@@ -28,6 +28,13 @@ const FormPart = (props) => {
     correct: false,
   });
 
+  // useEffect(() => {
+  //   fetch(`http://18.216.201.29:3000/api/v1/output?bl_num=${product["value"]}`)
+  //     .then((response) => response.json())
+  //     .then((json) => setCorrectValues(json));
+  //   console.log(correctValues);
+  // }, [product]);
+
   const getData = async (event) => {
     console.log(product.value);
 
@@ -39,6 +46,7 @@ const FormPart = (props) => {
   const handleProduct = (event) => {
     let inputValue = event.target.value;
     let correctValue = correctValues["BL_NUM"];
+    console.log(correctValue);
 
     if (inputValue.length === 0) {
       setProduct({ value: inputValue, state: "", correct: false });
@@ -53,6 +61,7 @@ const FormPart = (props) => {
   const handleCompany = (event) => {
     let inputValue = event.target.value;
     let correctValue = correctValues["COMPANY_NAME"];
+    console.log(correctValue);
 
     if (inputValue.length === 0) {
       setCompany({ value: inputValue, state: "", correct: false });
@@ -66,6 +75,7 @@ const FormPart = (props) => {
   function handleUnit(event) {
     let inputValue = event.target.value;
     let correctValue = correctValues["UNIT"];
+    console.log(correctValue);
 
     if (inputValue.length === 0) {
       setUnit({ value: inputValue, state: "", correct: false });
@@ -83,6 +93,7 @@ const FormPart = (props) => {
   function handleAmount(event) {
     let inputValue = event.target.value;
     let correctValue = correctValues["QUANTITY"];
+    console.log(correctValue);
 
     if (inputValue.length === 0) {
       setAmount({ value: inputValue, state: "", correct: false });

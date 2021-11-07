@@ -22,11 +22,15 @@ const InputSearchPage = () => {
       to_date: form.to_date.value,
     };
 
-    const value = await getInputHistory(form.name.value);
+    const value = await getInputHistory(
+      form.name.value,
+      form.from_date.value,
+      form.to_date.value
+    );
     setInputHistory(value.data.data);
-    console.log(inputHistory);
+    // console.log(inputHistory);
 
-    console.log(searchData);
+    // console.log(searchData);
   };
 
   return (

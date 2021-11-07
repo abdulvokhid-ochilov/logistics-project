@@ -1,5 +1,5 @@
 import axios from "axios";
-const URL_SRV = "http://52.14.244.200:3000/api/v1";
+const URL_SRV = "http://18.216.201.29:3000/api/v1";
 
 export const getPosts = async (
   homePosts,
@@ -60,9 +60,11 @@ export const getProductByNum = async function (num) {
   }
 };
 
-export const getOutputHistory = async function (from) {
+export const getOutputHistory = async function (name, from, to) {
   try {
-    let response = await axios.get(`${URL_SRV}/output_history?from=${from}`);
+    let response = await axios.get(
+      `${URL_SRV}/output_history?driver_name=${name}&from=${from}&to=${to}`
+    );
 
     return { data: response.data };
   } catch (error) {
@@ -70,12 +72,29 @@ export const getOutputHistory = async function (from) {
   }
 };
 
-export const getInputHistory = async function (name) {
+export const getInputHistory = async function (name, from, to) {
   try {
-    let response = await axios.get(`${URL_SRV}/input_history?driver_name=${name}`);
+    let response = await axios.get(
+      `${URL_SRV}/input_history?driver_name=${name}&from=${from}&to=${to}`
+    );
 
     return { data: response.data };
   } catch (error) {
     return "404";
+  }
+};
+
+export const patchOutput = async function (data) {
+  try {
+    const response = await axios({
+      method: "PATCH",
+      url: `${URL_SRV}/output`,
+      body: {
+        data,
+      },
+    });
+    console.log(response);
+  } catch (error) {
+    throw error;
   }
 };

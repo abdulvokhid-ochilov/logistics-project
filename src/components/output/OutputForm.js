@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import Header from "../layout/Header";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { patchOutput } from "../../api/index";
 
 function OutputForm() {
   const [numberOfRows, setNumberOfRows] = useState(1);
@@ -34,7 +35,7 @@ function OutputForm() {
 
     for (let i = 0; i < formRows.length; i++) {
       company_names.push(form[`row-${i}-company`].value);
-      console.log(form[`row-${i}-company`]);
+      // console.log(form[`row-${i}-company`]);
       product_numbers.push(form[`row-${i}-product`].value);
       units.push(form[`row-${i}-unit`].value);
       amounts.push(form[`row-${i}-amount`].value);
@@ -47,10 +48,11 @@ function OutputForm() {
       bl_num: product_numbers,
       company_name: company_names,
       unit: units,
-      amount: amounts,
+      quanity: amounts,
     };
 
     console.log(outputData);
+    patchOutput(outputData);
   };
 
   return (

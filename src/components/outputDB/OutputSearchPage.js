@@ -21,11 +21,15 @@ const OutputSearchPage = () => {
       to_date: form.to_date.value,
     };
 
-    const value = await getOutputHistory(form.from_date.value);
+    const value = await getOutputHistory(
+      form.name.value,
+      form.from_date.value,
+      form.to_date.value
+    );
+    console.log(value.data.data);
     setOutputHistory(value.data.data);
-    console.log(outputHistory);
-
-    console.log(searchData);
+    // console.log(outputHistory);
+    // console.log(searchData);
   };
 
   return (

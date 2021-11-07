@@ -4,11 +4,11 @@ import TableRow from "../layout/TableRow";
 const OutputTable = (props) => {
   const tableRows = [];
 
-  for (let i = 1; i <= props.data.length; i++) {
+  for (let i = 0; i < props.data.length; i++) {
     tableRows.push(
       <TableRow
         key={i}
-        num={i}
+        num={i + 1}
         name={props.data[i]["DRIVER_NAME"]}
         phone={props.data[i]["PHONE_NUMBER"]}
         date={props.data[i]["ENTER_DATE"]}

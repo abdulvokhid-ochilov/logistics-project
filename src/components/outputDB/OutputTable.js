@@ -3,18 +3,20 @@ import TableRow from "../layout/TableRow";
 
 const OutputTable = (props) => {
   const tableRows = [];
-
-  for (let i = 1; i <= props.data.length; i++) {
+  // console.log(props.data);
+  for (let i = 0; i < props.data.length; i++) {
+    // console.log(props.data[i]);
     tableRows.push(
       <TableRow
         key={i}
-        num={i}
+        num={i + 1}
         name={props.data[i]["DRIVER_NAME"]}
         phone={props.data[i]["PHONE_NUM"]}
         date={props.data[i]["DT"]}
       />
     );
   }
+  // access-control-allow-credentials:true
 
   return (
     <Table className="search-table shadow" striped hover borderless>
