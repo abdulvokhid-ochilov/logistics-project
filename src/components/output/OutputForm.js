@@ -1,4 +1,3 @@
-// import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -10,7 +9,7 @@ import Col from "react-bootstrap/Col";
 
 function OutputForm() {
   const [numberOfRows, setNumberOfRows] = useState(1);
-  // const [databaseValue, setDatabaseValue] = useState();
+
   const formRows = [];
 
   for (let i = 0; i < numberOfRows; i++) {
@@ -35,6 +34,7 @@ function OutputForm() {
 
     for (let i = 0; i < formRows.length; i++) {
       company_names.push(form[`row-${i}-company`].value);
+      console.log(form[`row-${i}-company`]);
       product_numbers.push(form[`row-${i}-product`].value);
       units.push(form[`row-${i}-unit`].value);
       amounts.push(form[`row-${i}-amount`].value);
@@ -45,7 +45,7 @@ function OutputForm() {
       phone_num: form.contact.value,
       car_num: form.car_number.value,
       bl_num: product_numbers,
-      com_name: company_names,
+      company_name: company_names,
       unit: units,
       amount: amounts,
     };

@@ -52,13 +52,17 @@ export const addNewsLetter = async function (data) {
 
 export const getProductByNum = async function (num) {
   try {
-    // console.log(num);
-    // setTimeout(await axios.get(`${URL_SRV}/output?bl_num=${num}`), 2000);
-
     let response = await axios.get(`${URL_SRV}/output?bl_num=${num}`);
-    //   .then((result) => result.data);
-    // console.log(response.data);
-    // let response2 = await axios.get(`${URL_SRV}/output?bl_num=${num}`);
+
+    return { data: response.data };
+  } catch (error) {
+    return "404";
+  }
+};
+
+export const getOutputHistory = async function (from) {
+  try {
+    let response = await axios.get(`${URL_SRV}/output?from=${from}`);
 
     return { data: response.data };
   } catch (error) {

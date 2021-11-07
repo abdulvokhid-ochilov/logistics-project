@@ -1,6 +1,21 @@
 import Table from "react-bootstrap/Table";
+import TableRow from "./TableRow";
 
 const OutputTable = (props) => {
+  const tableRows = [];
+
+  for (let i = 1; i <= props.data.length; i++) {
+    tableRows.push(
+      <TableRow
+        key={i}
+        num={i}
+        name={props.data[i]["DRIVER_NAME"]}
+        phone={props.data[i]["PHONE_NUM"]}
+        date={props.data[i]["DT"]}
+      />
+    );
+  }
+
   return (
     <Table className="search-table shadow" striped hover borderless>
       <thead className="table-head">
@@ -11,44 +26,7 @@ const OutputTable = (props) => {
           <th className="right-head-cell">Phone Number</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-      </tbody>
+      <tbody>{tableRows.map((row) => row)}</tbody>
     </Table>
   );
 };

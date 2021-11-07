@@ -1,28 +1,29 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-// import SearchForm from "./SearchForm";s
 import React, { useState } from "react";
 import Header from "../layout/Header";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SearchForm from "./SearchForm";
 import OutputTable from "./OutputTable";
+import { getOutputHistory } from "../../api/index";
 
 const OutputSearchPage = () => {
-  const [numberOfRows, setNumberOfRows] = useState(1);
+  const [outputHistory, setOutputHistory] = useState([]);
 
-  // const formRows = [];
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-
     const searchData = {
       name: form.name.value,
       from_date: form.from_date.value,
       to_date: form.to_date.value,
     };
+
+    const value = await getOutputHistory(form.from_date.value);
+    setOutputHistory(value.data.data);
+    console.log(outputHistory);
 
     console.log(searchData);
   };
@@ -48,7 +49,7 @@ const OutputSearchPage = () => {
           </Row>
         </Form>
 
-        <OutputTable />
+        {outputHistory.length > 0 && <OutputTable data={outputHistory} />}
       </Container>
     </>
   );
