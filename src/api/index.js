@@ -89,12 +89,22 @@ export const patchOutput = async function (data) {
     const response = await axios({
       method: "PATCH",
       url: `${URL_SRV}/output`,
-      body: {
-        data,
-      },
+      data,
     });
     console.log(response);
   } catch (error) {
     throw error;
   }
 };
+// export const patchOutput = function (data) {
+//   fetch(`${URL_SRV}/output`, {
+//     method: "PATCH",
+//     headers: { "Content-type": "application/json" },
+//     body: JSON.stringify(data),
+//   })
+//     .then((response) => {
+//       console.log(response.status);
+//       return response.json();
+//     })
+//     .then((data) => console.log(data));
+// };
