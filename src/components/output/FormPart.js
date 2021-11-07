@@ -2,10 +2,10 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useState } from "react";
-import axios from "axios";
+import { getProductByNum } from "../../api/index";
 
 const FormPart = (props) => {
-  const [correctValues, setCorrectValues] = useState();
+  const [correctValues, setCorrectValues] = useState({});
 
   const [product, setProduct] = useState({
     value: "",
@@ -22,32 +22,37 @@ const FormPart = (props) => {
     state: "",
     correct: false,
   });
+  const [unit, setUnit] = useState({
+    value: "",
+    state: "",
+    correct: false,
+  });
 
-  function handleProduct(event) {
-    let inputValue = event.target.value;
-    let correctValue = "123";
+  const getData = async (event) => {
+    console.log(product.value);
 
-    axios
-      .get("http://52.14.244.200:3000/api/v1/output?bl_num=HSLI024277300006J")
-      .then((response) => setCorrectValues(response.data[0]))
-      .catch((error) => {
-        console.log({ errorMessage: error.message });
-        // console.error("There was an error!", error);
-      });
-
+    const value = await getProductByNum(product.value);
+    setCorrectValues(value.data.data[0]);
     console.log(correctValues);
+  };
+
+  const handleProduct = (event) => {
+    let inputValue = event.target.value;
+    let correctValue = correctValues["BL_NUM"];
+
     if (inputValue.length === 0) {
       setProduct({ value: inputValue, state: "", correct: false });
     } else if (inputValue === correctValue) {
       setProduct({ value: inputValue, state: "form-success", correct: true });
+      console.log("working");
     } else {
       setProduct({ value: inputValue, state: "form-failure", correct: false });
     }
-  }
+  };
 
-  function handleCompany(event) {
+  const handleCompany = (event) => {
     let inputValue = event.target.value;
-    let correctValue = "1234";
+    let correctValue = correctValues["COMPANY_NAME"];
 
     if (inputValue.length === 0) {
       setCompany({ value: inputValue, state: "", correct: false });
@@ -56,18 +61,36 @@ const FormPart = (props) => {
     } else {
       setCompany({ value: inputValue, state: "form-failure", correct: false });
     }
+  };
+
+  function handleUnit(event) {
+    let inputValue = event.target.value;
+    let correctValue = correctValues["UNIT"];
+
+    if (inputValue.length === 0) {
+      setUnit({ value: inputValue, state: "", correct: false });
+    } else if (
+      inputValue === correctValue &&
+      product.correct &&
+      company.correct
+    ) {
+      setUnit({ value: inputValue, state: "form-success", correct: true });
+    } else {
+      setUnit({ value: inputValue, state: "form-failure", correct: false });
+    }
   }
 
   function handleAmount(event) {
     let inputValue = event.target.value;
-    let correctValue = "50";
+    let correctValue = correctValues["QUANTITY"];
 
     if (inputValue.length === 0) {
       setAmount({ value: inputValue, state: "", correct: false });
     } else if (
       inputValue <= correctValue &&
       product.correct &&
-      company.correct
+      company.correct &&
+      unit.correct
     ) {
       setAmount({ value: inputValue, state: "form-success", correct: true });
     } else {
@@ -85,6 +108,7 @@ const FormPart = (props) => {
           className={product.state}
           value={product.value}
           onChange={handleProduct}
+          onBlur={getData}
         />
       </Form.Group>
 
@@ -96,6 +120,11 @@ const FormPart = (props) => {
           className={company.state}
           value={company.value}
           onChange={handleCompany}
+          onFocus={() => {
+            setTimeout(() => {
+              getData();
+            }, 1000);
+          }}
         />
       </Form.Group>
 
@@ -103,11 +132,13 @@ const FormPart = (props) => {
         <Form.Label>Unit</Form.Label>
         <Form.Select
           defaultValue="Choose..."
-          className={"form-control"}
+          className={unit.state}
           name={`${props.name}-unit`}
+          onChange={handleUnit}
         >
           required
-          {/* <option>Choose...</option> */}
+          <option>kg</option>
+          <option>box</option>
           <option>kg</option>
         </Form.Select>
       </Form.Group>
