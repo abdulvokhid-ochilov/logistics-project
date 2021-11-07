@@ -2,8 +2,11 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useState } from "react";
+import axios from "axios";
 
 const FormPart = (props) => {
+  const [correctValues, setCorrectValues] = useState();
+
   const [product, setProduct] = useState({
     value: "",
     state: "",
@@ -24,6 +27,15 @@ const FormPart = (props) => {
     let inputValue = event.target.value;
     let correctValue = "123";
 
+    axios
+      .get("http://52.14.244.200:3000/api/v1/output?bl_num=HSLI024277300006J")
+      .then((response) => setCorrectValues(response.data[0]))
+      .catch((error) => {
+        console.log({ errorMessage: error.message });
+        // console.error("There was an error!", error);
+      });
+
+    console.log(correctValues);
     if (inputValue.length === 0) {
       setProduct({ value: inputValue, state: "", correct: false });
     } else if (inputValue === correctValue) {

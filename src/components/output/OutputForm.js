@@ -10,7 +10,7 @@ import Col from "react-bootstrap/Col";
 
 function OutputForm() {
   const [numberOfRows, setNumberOfRows] = useState(1);
-  // const [validated, setValidated] = useState(false);
+  const [databaseValue, setDatabaseValue] = useState();
   const formRows = [];
 
   for (let i = 0; i < numberOfRows; i++) {
