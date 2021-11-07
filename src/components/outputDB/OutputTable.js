@@ -1,5 +1,5 @@
 import Table from "react-bootstrap/Table";
-import TableRow from "./TableRow";
+import TableRow from "../layout/TableRow";
 
 const OutputTable = (props) => {
   const tableRows = [];

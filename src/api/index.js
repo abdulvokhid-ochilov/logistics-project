@@ -62,7 +62,17 @@ export const getProductByNum = async function (num) {
 
 export const getOutputHistory = async function (from) {
   try {
-    let response = await axios.get(`${URL_SRV}/output?from=${from}`);
+    let response = await axios.get(`${URL_SRV}/output_history?from=${from}`);
+
+    return { data: response.data };
+  } catch (error) {
+    return "404";
+  }
+};
+
+export const getInputHistory = async function (name) {
+  try {
+    let response = await axios.get(`${URL_SRV}/input_history?driver_name=${name}`);
 
     return { data: response.data };
   } catch (error) {
