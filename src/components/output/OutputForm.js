@@ -47,8 +47,8 @@ function OutputForm() {
       car_num: form.car_number.value,
       bl_num: product_numbers,
       company_name: company_names,
-      unit: units,
       quanity: amounts,
+      unit: units,
     };
 
     console.log(outputData);

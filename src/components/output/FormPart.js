@@ -119,7 +119,7 @@ const FormPart = (props) => {
           className={product.state}
           value={product.value}
           onChange={handleProduct}
-          onBlur={getData}
+          // onBlur={getData}
         />
       </Form.Group>
 
@@ -131,11 +131,11 @@ const FormPart = (props) => {
           className={company.state}
           value={company.value}
           onChange={handleCompany}
-          onFocus={() => {
-            setTimeout(() => {
-              getData();
-            }, 1000);
-          }}
+          // onFocus={() => {
+          //   setTimeout(() => {
+          //     getData();
+          //   }, 1000);
+          // }}
         />
       </Form.Group>
 

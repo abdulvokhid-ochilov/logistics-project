@@ -6,7 +6,9 @@ import React, { useState } from "react";
 import Header from "../layout/Header";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { ToastContainer, toast } from "react-toastify";
 import FormContactPart from "./FormContactPart";
+import { postInput } from "../../api/index";
 
 function InputForm() {
   const [numberOfRows, setNumberOfRows] = useState(1);
@@ -18,6 +20,7 @@ function InputForm() {
   }
 
   function AddRow() {
+    // test();
     setNumberOfRows(numberOfRows + 1);
   }
 
@@ -48,17 +51,22 @@ function InputForm() {
       car_num: form.car_number.value,
       forwarder: form.forwarder.value,
       destination_port: form.departure_date.value,
-      hwangja: form.hwangja.value,
-      booking_number: form.booking_number.value,
+      sonmyong: form.hwangja.value,
+      booking_num: form.booking_number.value,
       departure_date: form.departure_date.value,
-      com_name: company_names,
-      amount: amount,
+      company_name: company_names,
+      quantity: amount,
       package: package_,
       weight: weight,
       volume: volume,
     };
 
     console.log(inputData);
+    // test(inputData)
+    const status = postInput(inputData);
+    console.log(status);
+    // patchOutputTest(inputData);
+    // test();
   };
 
   return (
