@@ -7,6 +7,7 @@ import Header from "../layout/Header";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import FormContactPart from "./FormContactPart";
 import { postInput } from "../../api/index";
 
@@ -28,7 +29,7 @@ function InputForm() {
     if (numberOfRows > 1) setNumberOfRows(numberOfRows - 1);
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     const company_names = [];
@@ -62,16 +63,46 @@ function InputForm() {
     };
 
     console.log(inputData);
-    // test(inputData)
-    const status = postInput(inputData);
-    console.log(status);
-    // patchOutputTest(inputData);
-    // test();
+
+    // const status = await postInput(inputData);
+
+    "success" === "success"
+      ? toast.success("Data is successfully saved!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
+      : toast.error("Something went wrong!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+
+    event.currentTarget.reset();
   };
 
   return (
     <>
       <Header />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Container>
         <h1 className="page-heading">입고 요청서</h1>
         <Form onSubmit={handleSubmit}>

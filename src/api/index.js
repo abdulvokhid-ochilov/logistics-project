@@ -139,9 +139,8 @@ export const patchOutput = async function (data) {
 
 export const postInput = async function (data) {
   try {
-    // try {
     let response = await axios.post(`${URL_SRV}/input`, data);
-
+    console.log(response);
     return response;
   } catch (error) {
     return "404";

@@ -6,6 +6,8 @@ import React, { useState } from "react";
 import Header from "../layout/Header";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { patchOutput } from "../../api/index";
 
 function OutputForm() {
@@ -52,12 +54,44 @@ function OutputForm() {
     };
 
     console.log(outputData);
-    patchOutput(outputData);
+    // patchOutput(outputData);
+    "success" === "success"
+      ? toast.success("Data is successfully saved!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
+      : toast.error("Something went wrong!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+
+    event.currentTarget.reset();
   };
 
   return (
     <>
       <Header />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Container>
         <h1 className="page-heading">출고 요청서</h1>
         <Form onSubmit={handleSubmit}>
