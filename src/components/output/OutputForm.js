@@ -37,7 +37,6 @@ function OutputForm() {
 
     for (let i = 0; i < formRows.length; i++) {
       company_names.push(form[`row-${i}-company`].value);
-      // console.log(form[`row-${i}-company`]);
       product_numbers.push(form[`row-${i}-product`].value);
       units.push(form[`row-${i}-unit`].value);
       amounts.push(form[`row-${i}-amount`].value);
@@ -54,7 +53,7 @@ function OutputForm() {
     };
 
     console.log(outputData);
-    // patchOutput(outputData);
+
     "success" === "success"
       ? toast.success("Data is successfully saved!", {
           position: "bottom-right",

@@ -13,7 +13,7 @@ import { postInput } from "../../api/index";
 
 function InputForm() {
   const [numberOfRows, setNumberOfRows] = useState(1);
-  // const [validated, setValidated] = useState(false);
+  
   const formRows = [];
 
   for (let i = 0; i < numberOfRows; i++) {
@@ -21,7 +21,7 @@ function InputForm() {
   }
 
   function AddRow() {
-    // test();
+    
     setNumberOfRows(numberOfRows + 1);
   }
 

@@ -28,9 +28,6 @@ const InputSearchPage = () => {
       form.to_date.value
     );
     setInputHistory(value.data.data);
-    // console.log(inputHistory);
-
-    // console.log(searchData);
   };
 
   return (

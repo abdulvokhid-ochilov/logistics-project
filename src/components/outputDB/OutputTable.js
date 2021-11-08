@@ -3,9 +3,9 @@ import TableRow from "../layout/TableRow";
 
 const OutputTable = (props) => {
   const tableRows = [];
-  // console.log(props.data);
+ 
   for (let i = 0; i < props.data.length; i++) {
-    // console.log(props.data[i]);
+   
     tableRows.push(
       <TableRow
         key={i}
@@ -16,7 +16,7 @@ const OutputTable = (props) => {
       />
     );
   }
-  // access-control-allow-credentials:true
+  
 
   return (
     <Table className="search-table shadow" striped hover borderless>
