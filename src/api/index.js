@@ -1,54 +1,54 @@
 import axios from "axios";
 const URL_SRV = "http://18.216.201.29:3000/api/v1";
 
-export const getPosts = async (
-  homePosts,
-  page = 1,
-  order = "asc",
-  limit = 10
-) => {
-  try {
-    const response = await axios.get(
-      `${URL_SRV}/posts?_page=${page}&_limit=${limit}&_order=${order}&_sort=id`
-    );
+// export const getPosts = async (
+//   homePosts,
+//   page = 1,
+//   order = "asc",
+//   limit = 10
+// ) => {
+//   try {
+//     const response = await axios.get(
+//       `${URL_SRV}/posts?_page=${page}&_limit=${limit}&_order=${order}&_sort=id`
+//     );
 
-    return {
-      posts: homePosts.posts
-        ? [...homePosts.posts, ...response.data]
-        : response.data,
-      page: page,
-      end: response.data.length === 0 ? true : false,
-    };
-  } catch (error) {
-    throw error;
-  }
-};
+//     return {
+//       posts: homePosts.posts
+//         ? [...homePosts.posts, ...response.data]
+//         : response.data,
+//       page: page,
+//       end: response.data.length === 0 ? true : false,
+//     };
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
-export const addNewsLetter = async function (data) {
-  try {
-    const user = await axios
-      .get(`${URL_SRV}/newsletter?email=${data.email}`)
-      .then((response) => response.data);
+// export const addNewsLetter = async function (data) {
+//   try {
+//     const user = await axios
+//       .get(`${URL_SRV}/newsletter?email=${data.email}`)
+//       .then((response) => response.data);
 
-    if (!Array.isArray(user.data) || !user.data.length) {
-      const response = await axios({
-        method: "POST",
-        url: `${URL_SRV}/newsletter`,
-        data: {
-          email: data.email,
-        },
-      });
-      return {
-        newsletter: "added",
-        email: response.data,
-      };
-    } else {
-      return { newsletter: "failed" };
-    }
-  } catch (error) {
-    throw error;
-  }
-};
+//     if (!Array.isArray(user.data) || !user.data.length) {
+//       const response = await axios({
+//         method: "POST",
+//         url: `${URL_SRV}/newsletter`,
+//         data: {
+//           email: data.email,
+//         },
+//       });
+//       return {
+//         newsletter: "added",
+//         email: response.data,
+//       };
+//     } else {
+//       return { newsletter: "failed" };
+//     }
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 export const getProductByNum = async function (num) {
   try {
@@ -108,6 +108,16 @@ export const postInput = async function (data) {
     let response = await axios.post(`${URL_SRV}/input`, data);
     console.log(response);
     return response;
+  } catch (error) {
+    return "404";
+  }
+};
+
+export const getOutputQRCode = async function (transaction_id) {
+  try {
+    let response = await axios.get(`${URL_SRV}/output/${transaction_id}`);
+
+    return response.data;
   } catch (error) {
     return "404";
   }
