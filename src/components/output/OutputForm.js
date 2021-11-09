@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import FormPart from "./FormPart";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Header from "../layout/Header";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -12,8 +12,37 @@ import { patchOutput } from "../../api/index";
 
 function OutputForm() {
   const [numberOfRows, setNumberOfRows] = useState(1);
+  const [message, setMessage] = useState();
 
   const formRows = [];
+
+  const initialRender = useRef(true);
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      message === "success"
+        ? toast.success("Data is successfully saved!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
+        : toast.error("Something went wrong!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+    }
+  }, [message]);
 
   for (let i = 0; i < numberOfRows; i++) {
     formRows.push(<FormPart key={i} name={`row-${i}`} />);
@@ -27,7 +56,7 @@ function OutputForm() {
     if (numberOfRows > 1) setNumberOfRows(numberOfRows - 1);
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     const company_names = [];
@@ -48,33 +77,18 @@ function OutputForm() {
       car_num: form.car_number.value,
       bl_num: product_numbers,
       company_name: company_names,
-      quanity: amounts,
+      quantity: amounts,
       unit: units,
     };
 
-    console.log(outputData);
+    const status = await patchOutput(outputData);
 
-    "success" === "success"
-      ? toast.success("Data is successfully saved!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        })
-      : toast.error("Something went wrong!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+    setMessage(status.message);
+    // console.log(event);
+    event.target.reset();
+    // console.log(outputData);
 
-    event.currentTarget.reset();
+    // event.currentTarget.reset();
   };
 
   return (

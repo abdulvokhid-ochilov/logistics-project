@@ -2,7 +2,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import FormPart from "./FormPart";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Header from "../layout/Header";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,15 +13,43 @@ import { postInput } from "../../api/index";
 
 function InputForm() {
   const [numberOfRows, setNumberOfRows] = useState(1);
-  
+  const [message, setMessage] = useState();
+
   const formRows = [];
+
+  const initialRender = useRef(true);
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      message === "success"
+        ? toast.success("Data is successfully saved!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
+        : toast.error("Something went wrong!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+    }
+  }, [message]);
 
   for (let i = 0; i < numberOfRows; i++) {
     formRows.push(<FormPart key={i} name={`row-${i}`} />);
   }
 
   function AddRow() {
-    
     setNumberOfRows(numberOfRows + 1);
   }
 
@@ -29,7 +57,7 @@ function InputForm() {
     if (numberOfRows > 1) setNumberOfRows(numberOfRows - 1);
   }
 
-  const handleSubmit = async (event) => {
+  const HandleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     const company_names = [];
@@ -64,29 +92,11 @@ function InputForm() {
 
     console.log(inputData);
 
-    // const status = await postInput(inputData);
+    const status = await postInput(inputData);
 
-    "success" === "success"
-      ? toast.success("Data is successfully saved!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        })
-      : toast.error("Something went wrong!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-
-    event.currentTarget.reset();
+    setMessage(status.message);
+    // console.log(event);
+    event.target.reset();
   };
 
   return (
@@ -105,7 +115,7 @@ function InputForm() {
       />
       <Container>
         <h1 className="page-heading">입고 요청서</h1>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={HandleSubmit} id="Input">
           <FormContactPart />
 
           <Container className="bottom-form shadow">

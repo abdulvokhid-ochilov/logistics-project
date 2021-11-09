@@ -41,8 +41,8 @@ const Table = (props) => {
             ))}
           </tbody>
         </table>
-        <div classNameName="input-print-image">
-          <img src={image} alt="print" />
+        <div>
+          <img className="input-print-image" src={image} alt="print" />
         </div>
       </div>
       <div className="input-print-signing">

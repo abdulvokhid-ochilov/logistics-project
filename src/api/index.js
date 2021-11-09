@@ -87,27 +87,40 @@ export const getInputHistory = async function (name, from, to) {
 export const patchOutput = async function (data) {
   try {
     // try {
-    let response = await axios.patch(`${URL_SRV}/output`, {
-      driver_name: "kim",
-      phone_num: "01087128235",
-      car_num: "02허 9757",
-      bl_num: ["HSLI024277300006J", "ABCD024277300006J", "BCDA024277300006J"],
-      company_name: ["YUJIN INTERNATIONAL", "Samsung", "Samsung chemical"],
-      quantity: [1, 1, 1],
-      unit: ["box", "box", "kg"],
-    });
-
-    return console.log(response);
+    console.log(data);
+    // console.log({
+    //   driver_name: "kim",
+    //   phone_num: "01087128235",
+    //   car_num: "02허 9757",
+    //   bl_num: ["HSLI024277300006J"],
+    //   company_name: ["YUJIN INTERNATIONAL"],
+    //   quantity: [1],
+    //   unit: ["box"],
+    // });
+    let response = await axios.patch(`${URL_SRV}/output`, data);
+    console.log(response);
+    return response.data;
   } catch (error) {
     return "404";
   }
 };
 
+// {
+//   driver_name: "kim",
+//   phone_num: "01087128235",
+//   car_num: "02허 9757",
+//   bl_num: ["HSLI024277300006J", "ABCD024277300006J", "BCDA024277300006J"],
+//   company_name: ["YUJIN INTERNATIONAL", "Samsung", "Samsung chemical"],
+//   quantity: [1, 1, 1],
+//   unit: ["box", "box", "kg"],
+// }
+
 export const postInput = async function (data) {
   try {
     let response = await axios.post(`${URL_SRV}/input`, data);
+
     console.log(response);
-    return response;
+    return response.data;
   } catch (error) {
     return "404";
   }

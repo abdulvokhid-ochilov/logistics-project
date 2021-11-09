@@ -1,3 +1,11 @@
+.input-print-image {
+  width: 100%;
+}
+
+.input-print-container p {
+  margin: 0;
+}
+
 .btn {
   border-radius: 4px;
   font-size: 16px;
@@ -974,7 +982,7 @@ a {
   width: 205mm;
   display: flex;
   flex-direction: column;
-  margin: 3rem 0;
+  margin: 1rem 0;
 }
 .input-print-heading {
   display: flex;
