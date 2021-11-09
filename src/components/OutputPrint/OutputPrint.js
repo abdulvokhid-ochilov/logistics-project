@@ -57,9 +57,9 @@ const OutputPrint = (props) => {
           />
         </div>
       </div>
-      <div class="print-btn-container">
+      {/* <div class="print-btn-container">
         <button class="print-btn">출고증인쇄</button>
-      </div>{" "}
+      </div> */}
     </>
   ) : (
     <Hypnosis

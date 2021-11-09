@@ -122,3 +122,13 @@ export const getOutputQRCode = async function (transaction_id) {
     return "404";
   }
 };
+
+export const getInputQRCode = async function (transaction_id) {
+  try {
+    let response = await axios.get(`${URL_SRV}/input/${transaction_id}`);
+
+    return response.data;
+  } catch (error) {
+    return "404";
+  }
+};
