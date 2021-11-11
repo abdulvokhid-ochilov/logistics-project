@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getProductByNum } from "../../api/index";
 
 const FormPart = (props) => {
@@ -9,89 +9,82 @@ const FormPart = (props) => {
 
   const [product, setProduct] = useState({
     value: "",
-    state: "",
-    correct: false,
+    IsInvalid: false,
+    IsValid: false,
   });
   const [company, setCompany] = useState({
     value: "",
-    state: "",
-    correct: false,
+    IsInvalid: false,
+    IsValid: false,
   });
   const [amount, setAmount] = useState({
     value: "",
-    state: "",
-    correct: false,
+    IsInvalid: false,
+    IsValid: false,
   });
   const [unit, setUnit] = useState({
     value: "",
-    state: "",
-    correct: false,
+    IsInvalid: false,
+    IsValid: false,
   });
 
-  // const getData = async (event) => {
-  //   console.log(product.value);
-
-  //   const value = await getProductByNum(product.value);
-  //   setCorrectValues(value.data.data[0]);
-  //   console.log(correctValues);
-  // };
   const handleProduct = () => {
     let inputValue = product.value;
     let correctValue = correctValues?.["BL_NUM"] || "";
     console.log(correctValue);
 
     if (inputValue.length === 0) {
-      setProduct({ value: inputValue, state: "", correct: false });
+      setProduct({ value: inputValue, IsInvalid: false, IsValid: false });
     } else if (inputValue === correctValue) {
-      setProduct({ value: inputValue, state: "form-success", correct: true });
+      setProduct({ value: inputValue, IsInvalid: false, IsValid: true });
       console.log("working");
     } else {
-      setProduct({ value: inputValue, state: "form-failure", correct: false });
+      setProduct({ value: inputValue, IsInvalid: true, IsValid: false });
     }
   };
 
-  const handleCompany = useCallback(() => {
+  const handleCompany = () => {
     let inputValue = company.value;
     let correctValue = correctValues?.["COMPANY_NAME"] || "";
     console.log(correctValue);
 
     if (inputValue.length === 0) {
-      setCompany({ value: inputValue, state: "", correct: false });
+      setCompany({ value: inputValue, IsInvalid: false, IsValid: false });
     } else if (inputValue === correctValue) {
-      setCompany({ value: inputValue, state: "form-success", correct: true });
+      setCompany({ value: inputValue, IsInvalid: false, IsValid: true });
     } else {
-      setCompany({ value: inputValue, state: "form-failure", correct: false });
+      setCompany({ value: inputValue, IsInvalid: true, IsValid: false });
     }
-  }, [correctValues, company]);
+  };
 
-  const handleUnit = useCallback(() => {
+  const handleUnit = () => {
     let inputValue = unit.value;
     let correctValue = correctValues?.["UNIT"] || "";
     console.log(correctValue);
 
     if (inputValue.length === 0) {
-      setUnit({ value: inputValue, state: "", correct: false });
+      setUnit({ value: inputValue, IsInvalid: false, IsValid: false });
     } else if (inputValue === correctValue) {
-      setUnit({ value: inputValue, state: "form-success", correct: true });
+      setUnit({ value: inputValue, IsInvalid: false, IsValid: true });
     } else {
-      setUnit({ value: inputValue, state: "form-failure", correct: false });
+      setUnit({ value: inputValue, IsInvalid: true, IsValid: false });
     }
-  }, [correctValues, unit]);
+  };
 
-  const handleAmount = useCallback(() => {
+  const handleAmount = () => {
     let inputValue = amount.value;
     let correctValue = correctValues?.["QUANTITY"] || "";
 
     console.log(correctValue);
 
     if (inputValue.length === 0) {
-      setAmount({ value: inputValue, state: "", correct: false });
+      setAmount({ value: inputValue, IsInvalid: false, IsValid: false });
     } else if (inputValue <= correctValue) {
-      setAmount({ value: inputValue, state: "form-success", correct: true });
+      setAmount({ value: inputValue, IsInvalid: false, IsValid: true });
     } else {
-      setAmount({ value: inputValue, state: "form-failure", correct: false });
+      setAmount({ value: inputValue, IsInvalid: true, IsValid: false });
     }
-  }, [correctValues, amount]);
+  };
 
   const initialRender = useRef(true);
   useEffect(() => {
@@ -99,29 +92,23 @@ const FormPart = (props) => {
       const productInfo = await getProductByNum(product.value);
       console.log(productInfo);
       setCorrectValues(productInfo.data[0]);
-      // handleProduct(product, setProduct, correctValues);
-      // handleCompany();
-      // handleUnit();
-      // handleAmount();
     };
     if (initialRender.current) {
       initialRender.current = false;
     } else {
       apiCall();
-      // handleProduct();
     }
   }, [product]);
 
-  // useEffect(() => {
-  //   handleProduct(product, setProduct, correctValues);
-  // }, [product, setProduct, correctValues]);
-
   return (
     <Row key={props.key} className="mb-3">
-      <Form.Group as={Col} controlId="formGridCity">
+      <Form.Group as={Col} controlId="formGridCity" hasValidation>
         <Form.Label>Product Code</Form.Label>
+
         <Form.Control
           required
+          isValid={product.IsValid}
+          isInvalid={product.IsInvalid}
           name={`${props.name}-product`}
           value={product.value}
           onChange={(e) => {
@@ -129,9 +116,7 @@ const FormPart = (props) => {
               ...prevValue,
               value: e.target.value,
             }));
-            // handleProduct();
           }}
-          className={product.state}
           onBlur={() => {
             handleProduct();
             handleCompany();
@@ -139,12 +124,20 @@ const FormPart = (props) => {
             handleAmount();
           }}
         />
+        <Form.Control.Feedback type="invalid">
+          Incorrect Input
+        </Form.Control.Feedback>
+        <Form.Control.Feedback type="valid">
+          Correct Input
+        </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group as={Col} controlId="formGridZip">
+      <Form.Group as={Col} controlId="formGridZip" hasValidation>
         <Form.Label>Company Code</Form.Label>
         <Form.Control
           required
+          isValid={company.IsValid}
+          isInvalid={company.IsInvalid}
           name={`${props.name}-company`}
           value={company.value}
           onChange={(e) => {
@@ -153,22 +146,21 @@ const FormPart = (props) => {
               value: e.target.value,
             }));
           }}
-          className={company.state}
           onBlur={() => {
             handleCompany();
           }}
-          // onFocus={() => {
-          //   setTimeout(() => {
-          //     getData();
-          //   }, 1000);
-          // }}
         />
+        <Form.Control.Feedback type="invalid">
+          Incorrect Input
+        </Form.Control.Feedback>
+        <Form.Control.Feedback type="valid">
+          Correct Input
+        </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group as={Col} controlId="formGridState">
+      <Form.Group as={Col} controlId="formGridState" hasValidation>
         <Form.Label>Unit</Form.Label>
         <Form.Select
-          defaultValue="Choose..."
           onChange={(e) => {
             setUnit((prevValue) => ({
               ...prevValue,
@@ -178,18 +170,28 @@ const FormPart = (props) => {
           className={unit.state}
           name={`${props.name}-unit`}
           onBlur={handleUnit}
-        >
           required
+          isValid={unit.IsValid}
+          isInvalid={unit.IsInvalid}
+        >
           <option>kg</option>
           <option>box</option>
           <option>kg</option>
         </Form.Select>
+        <Form.Control.Feedback type="invalid">
+          Incorrect Input
+        </Form.Control.Feedback>
+        <Form.Control.Feedback type="valid">
+          Correct Input
+        </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group as={Col} controlId="formGridZip">
+      <Form.Group as={Col} controlId="formGridZip" hasValidation>
         <Form.Label>Amount</Form.Label>
         <Form.Control
           required
+          isValid={amount.IsValid}
+          isInvalid={amount.IsInvalid}
           name={`${props.name}-amount`}
           onChange={(e) => {
             setAmount((prevValue) => ({
@@ -197,10 +199,15 @@ const FormPart = (props) => {
               value: e.target.value,
             }));
           }}
-          className={amount.state}
           value={amount.value}
           onBlur={handleAmount}
         />
+        <Form.Control.Feedback type="invalid">
+          Incorrect Input
+        </Form.Control.Feedback>
+        <Form.Control.Feedback type="valid">
+          Correct Input
+        </Form.Control.Feedback>
       </Form.Group>
     </Row>
   );
