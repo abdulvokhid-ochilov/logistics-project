@@ -54,7 +54,7 @@ export const getProductByNum = async function (num) {
   try {
     let response = await axios.get(`${URL_SRV}/output?bl_num=${num}`);
 
-    return { data: response.data };
+    return response.data;
   } catch (error) {
     return "404";
   }

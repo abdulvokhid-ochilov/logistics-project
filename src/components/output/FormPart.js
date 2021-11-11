@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { getProductByNum } from "../../api/index";
 
 const FormPart = (props) => {
@@ -28,24 +28,16 @@ const FormPart = (props) => {
     correct: false,
   });
 
-  // useEffect(() => {
-  //   fetch(`http://18.216.201.29:3000/api/v1/output?bl_num=${product["value"]}`)
-  //     .then((response) => response.json())
-  //     .then((json) => setCorrectValues(json));
+  // const getData = async (event) => {
+  //   console.log(product.value);
+
+  //   const value = await getProductByNum(product.value);
+  //   setCorrectValues(value.data.data[0]);
   //   console.log(correctValues);
-  // }, [product]);
-
-  const getData = async (event) => {
-    console.log(product.value);
-
-    const value = await getProductByNum(product.value);
-    setCorrectValues(value.data.data[0]);
-    console.log(correctValues);
-  };
-
-  const handleProduct = (event) => {
-    let inputValue = event.target.value;
-    let correctValue = correctValues["BL_NUM"];
+  // };
+  const handleProduct = () => {
+    let inputValue = product.value;
+    let correctValue = correctValues?.["BL_NUM"] || "";
     console.log(correctValue);
 
     if (inputValue.length === 0) {
@@ -58,56 +50,71 @@ const FormPart = (props) => {
     }
   };
 
-  const handleCompany = (event) => {
-    let inputValue = event.target.value;
-    let correctValue = correctValues["COMPANY_NAME"];
+  const handleCompany = useCallback(() => {
+    let inputValue = company.value;
+    let correctValue = correctValues?.["COMPANY_NAME"] || "";
     console.log(correctValue);
 
     if (inputValue.length === 0) {
       setCompany({ value: inputValue, state: "", correct: false });
-    } else if (inputValue === correctValue && product.correct) {
+    } else if (inputValue === correctValue) {
       setCompany({ value: inputValue, state: "form-success", correct: true });
     } else {
       setCompany({ value: inputValue, state: "form-failure", correct: false });
     }
-  };
+  }, [correctValues, company]);
 
-  function handleUnit(event) {
-    let inputValue = event.target.value;
-    let correctValue = correctValues["UNIT"];
+  const handleUnit = useCallback(() => {
+    let inputValue = unit.value;
+    let correctValue = correctValues?.["UNIT"] || "";
     console.log(correctValue);
 
     if (inputValue.length === 0) {
       setUnit({ value: inputValue, state: "", correct: false });
-    } else if (
-      inputValue === correctValue &&
-      product.correct &&
-      company.correct
-    ) {
+    } else if (inputValue === correctValue) {
       setUnit({ value: inputValue, state: "form-success", correct: true });
     } else {
       setUnit({ value: inputValue, state: "form-failure", correct: false });
     }
-  }
+  }, [correctValues, unit]);
 
-  function handleAmount(event) {
-    let inputValue = event.target.value;
-    let correctValue = correctValues["QUANTITY"];
+  const handleAmount = useCallback(() => {
+    let inputValue = amount.value;
+    let correctValue = correctValues?.["QUANTITY"] || "";
+
     console.log(correctValue);
 
     if (inputValue.length === 0) {
       setAmount({ value: inputValue, state: "", correct: false });
-    } else if (
-      inputValue <= correctValue &&
-      product.correct &&
-      company.correct &&
-      unit.correct
-    ) {
+    } else if (inputValue <= correctValue) {
       setAmount({ value: inputValue, state: "form-success", correct: true });
     } else {
       setAmount({ value: inputValue, state: "form-failure", correct: false });
     }
-  }
+  }, [correctValues, amount]);
+
+  const initialRender = useRef(true);
+  useEffect(() => {
+    const apiCall = async () => {
+      const productInfo = await getProductByNum(product.value);
+      console.log(productInfo);
+      setCorrectValues(productInfo.data[0]);
+      // handleProduct(product, setProduct, correctValues);
+      // handleCompany();
+      // handleUnit();
+      // handleAmount();
+    };
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      apiCall();
+      // handleProduct();
+    }
+  }, [product]);
+
+  // useEffect(() => {
+  //   handleProduct(product, setProduct, correctValues);
+  // }, [product, setProduct, correctValues]);
 
   return (
     <Row key={props.key} className="mb-3">
@@ -116,10 +123,21 @@ const FormPart = (props) => {
         <Form.Control
           required
           name={`${props.name}-product`}
-          className={product.state}
           value={product.value}
-          onChange={handleProduct}
-          // onBlur={getData}
+          onChange={(e) => {
+            setProduct((prevValue) => ({
+              ...prevValue,
+              value: e.target.value,
+            }));
+            // handleProduct();
+          }}
+          className={product.state}
+          onBlur={() => {
+            handleProduct();
+            handleCompany();
+            handleUnit();
+            handleAmount();
+          }}
         />
       </Form.Group>
 
@@ -128,9 +146,17 @@ const FormPart = (props) => {
         <Form.Control
           required
           name={`${props.name}-company`}
-          className={company.state}
           value={company.value}
-          onChange={handleCompany}
+          onChange={(e) => {
+            setCompany((prevValue) => ({
+              ...prevValue,
+              value: e.target.value,
+            }));
+          }}
+          className={company.state}
+          onBlur={() => {
+            handleCompany();
+          }}
           // onFocus={() => {
           //   setTimeout(() => {
           //     getData();
@@ -143,9 +169,15 @@ const FormPart = (props) => {
         <Form.Label>Unit</Form.Label>
         <Form.Select
           defaultValue="Choose..."
+          onChange={(e) => {
+            setUnit((prevValue) => ({
+              ...prevValue,
+              value: e.target.value,
+            }));
+          }}
           className={unit.state}
           name={`${props.name}-unit`}
-          onChange={handleUnit}
+          onBlur={handleUnit}
         >
           required
           <option>kg</option>
@@ -159,9 +191,15 @@ const FormPart = (props) => {
         <Form.Control
           required
           name={`${props.name}-amount`}
+          onChange={(e) => {
+            setAmount((prevValue) => ({
+              ...prevValue,
+              value: e.target.value,
+            }));
+          }}
           className={amount.state}
           value={amount.value}
-          onChange={handleAmount}
+          onBlur={handleAmount}
         />
       </Form.Group>
     </Row>
