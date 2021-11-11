@@ -1,7 +1,13 @@
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useState, useEffect, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  forwardRef,
+  useRef,
+  useImperativeHandle,
+} from "react";
 import { getProductByNum } from "../../api/index";
 
 const FormPart = (props) => {

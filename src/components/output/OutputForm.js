@@ -15,6 +15,7 @@ function OutputForm() {
   const [message, setMessage] = useState();
 
   const formRows = [];
+  const formRefs = [];
 
   const initialRender = useRef(true);
 
@@ -25,7 +26,7 @@ function OutputForm() {
       message === "success"
         ? toast.success("Data is successfully saved!", {
             position: "bottom-right",
-            autoClose: 5000,
+            autoClose: 8000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -34,7 +35,7 @@ function OutputForm() {
           })
         : toast.error("Something went wrong!", {
             position: "bottom-right",
-            autoClose: 5000,
+            autoClose: 8000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -43,8 +44,9 @@ function OutputForm() {
           });
     }
   }, [message]);
-
+  // const childCompRef = useRef();
   for (let i = 0; i < numberOfRows; i++) {
+    // formRefs.push();
     formRows.push(<FormPart key={i} name={`row-${i}`} />);
   }
 
@@ -80,15 +82,12 @@ function OutputForm() {
       quantity: amounts,
       unit: units,
     };
+    console.log(event);
+    // const status = await patchOutput(outputData);
+    // console.log(form.checkValidity());
+    // setMessage(status.message);
 
-    const status = await patchOutput(outputData);
-
-    setMessage(status.message);
-    // console.log(event);
-    event.target.reset();
-    // console.log(outputData);
-
-    // event.currentTarget.reset();
+    // event.target.reset();
   };
 
   return (
