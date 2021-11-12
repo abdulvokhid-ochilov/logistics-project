@@ -94,7 +94,7 @@ function InputForm() {
 
     const status = await postInput(inputData);
 
-    setMessage(status.message);
+    setMessage(status.status);
     // console.log(event);
     event.target.reset();
   };

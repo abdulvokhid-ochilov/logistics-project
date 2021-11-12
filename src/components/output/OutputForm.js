@@ -15,7 +15,7 @@ function OutputForm() {
   const [message, setMessage] = useState();
 
   const formRows = [];
-  const formRefs = [];
+  // const formRefs = [];
 
   const initialRender = useRef(true);
 
@@ -82,10 +82,10 @@ function OutputForm() {
       quantity: amounts,
       unit: units,
     };
-    console.log(event);
-    // const status = await patchOutput(outputData);
+    // console.log(event);
+    const status = await patchOutput(outputData);
     // console.log(form.checkValidity());
-    // setMessage(status.message);
+    setMessage(status.status);
 
     // event.target.reset();
   };

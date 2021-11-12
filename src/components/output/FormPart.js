@@ -67,7 +67,7 @@ const FormPart = (props) => {
     let inputValue = unit.value;
     let correctValue = correctValues?.["UNIT"] || "";
     console.log(correctValue);
-
+    // console.log();
     if (inputValue.length === 0) {
       setUnit({ value: inputValue, IsInvalid: false, IsValid: false });
     } else if (inputValue === correctValue) {
@@ -124,6 +124,7 @@ const FormPart = (props) => {
             }));
           }}
           onBlur={() => {
+            // setTimeout(() => handleProduct(), 2000);
             handleProduct();
             handleCompany();
             handleUnit();
@@ -154,6 +155,9 @@ const FormPart = (props) => {
           }}
           onBlur={() => {
             handleCompany();
+            handleProduct();
+            handleUnit();
+            handleAmount();
           }}
         />
         <Form.Control.Feedback type="invalid">
@@ -175,7 +179,12 @@ const FormPart = (props) => {
           }}
           className={unit.state}
           name={`${props.name}-unit`}
-          onBlur={handleUnit}
+          onBlur={() => {
+            handleUnit();
+            handleCompany();
+            handleAmount();
+            handleUnit();
+          }}
           required
           isValid={unit.IsValid}
           isInvalid={unit.IsInvalid}
@@ -206,7 +215,12 @@ const FormPart = (props) => {
             }));
           }}
           value={amount.value}
-          onBlur={handleAmount}
+          onBlur={() => {
+            handleUnit();
+            handleCompany();
+            handleAmount();
+            handleUnit();
+          }}
         />
         <Form.Control.Feedback type="invalid">
           Incorrect Input
