@@ -13,41 +13,25 @@ import { patchOutput } from "../../api/index";
 function OutputForm() {
   const [numberOfRows, setNumberOfRows] = useState(1);
   const [message, setMessage] = useState();
-
+  const inputState = {
+    value: "",
+    IsInvalid: false,
+    IsValid: false,
+  };
+  const inputRef = useRef();
+  const form = useRef();
   const formRows = [];
-  // const formRefs = [];
 
   const initialRender = useRef(true);
 
-  useEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false;
-    } else {
-      message === "success"
-        ? toast.success("Data is successfully saved!", {
-            position: "bottom-right",
-            autoClose: 8000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          })
-        : toast.error("Something went wrong!", {
-            position: "bottom-right",
-            autoClose: 8000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-    }
-  }, [message]);
-  // const childCompRef = useRef();
   for (let i = 0; i < numberOfRows; i++) {
-    // formRefs.push();
-    formRows.push(<FormPart key={i} name={`row-${i}`} />);
+    if (i === 0) {
+      formRows.push(
+        <FormPart key={i} name={`row-${i}`} state={inputState} ref={inputRef} />
+      );
+    } else {
+      formRows.push(<FormPart key={i} name={`row-${i}`} state={inputState} />);
+    }
   }
 
   function AddRow() {
@@ -82,13 +66,44 @@ function OutputForm() {
       quantity: amounts,
       unit: units,
     };
-    // console.log(event);
-    const status = await patchOutput(outputData);
-    // console.log(form.checkValidity());
-    setMessage(status.status);
 
-    // event.target.reset();
+    const status = await patchOutput(outputData);
+
+    setMessage(status);
   };
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      console.log(message);
+      if (message.status === "success") {
+        form.current.reset();
+        setNumberOfRows(1);
+        inputRef.current.cleanInput();
+
+        toast.success(message.message, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else if (message.status === "fail") {
+        toast.error(message.message, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    }
+  }, [message]);
 
   return (
     <>
@@ -106,7 +121,7 @@ function OutputForm() {
       />
       <Container>
         <h1 className="page-heading">출고 요청서</h1>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} ref={form}>
           <Container className="top-form shadow">
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridCity">

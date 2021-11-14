@@ -10,29 +10,22 @@ import {
 } from "react";
 import { getProductByNum } from "../../api/index";
 
-const FormPart = (props) => {
+const FormPart = forwardRef((props, ref) => {
   const [correctValues, setCorrectValues] = useState({});
 
-  const [product, setProduct] = useState({
-    value: "",
-    IsInvalid: false,
-    IsValid: false,
-  });
-  const [company, setCompany] = useState({
-    value: "",
-    IsInvalid: false,
-    IsValid: false,
-  });
-  const [amount, setAmount] = useState({
-    value: "",
-    IsInvalid: false,
-    IsValid: false,
-  });
-  const [unit, setUnit] = useState({
-    value: "",
-    IsInvalid: false,
-    IsValid: false,
-  });
+  const [product, setProduct] = useState(props.state);
+  const [company, setCompany] = useState(props.state);
+  const [amount, setAmount] = useState(props.state);
+  const [unit, setUnit] = useState(props.state);
+
+  useImperativeHandle(ref, () => ({
+    cleanInput() {
+      setProduct(props.state);
+      setCompany(props.state);
+      setUnit(props.state);
+      setAmount(props.state);
+    },
+  }));
 
   const handleProduct = () => {
     let inputValue = product.value;
@@ -124,7 +117,6 @@ const FormPart = (props) => {
             }));
           }}
           onBlur={() => {
-            // setTimeout(() => handleProduct(), 2000);
             handleProduct();
             handleCompany();
             handleUnit();
@@ -154,8 +146,8 @@ const FormPart = (props) => {
             }));
           }}
           onBlur={() => {
-            handleCompany();
             handleProduct();
+            handleCompany();
             handleUnit();
             handleAmount();
           }}
@@ -180,16 +172,16 @@ const FormPart = (props) => {
           className={unit.state}
           name={`${props.name}-unit`}
           onBlur={() => {
-            handleUnit();
+            handleProduct();
             handleCompany();
-            handleAmount();
             handleUnit();
+            handleAmount();
           }}
           required
           isValid={unit.IsValid}
           isInvalid={unit.IsInvalid}
         >
-          <option>kg</option>
+          <option>Select...</option>
           <option>box</option>
           <option>kg</option>
         </Form.Select>
@@ -216,10 +208,10 @@ const FormPart = (props) => {
           }}
           value={amount.value}
           onBlur={() => {
-            handleUnit();
+            handleProduct();
             handleCompany();
-            handleAmount();
             handleUnit();
+            handleAmount();
           }}
         />
         <Form.Control.Feedback type="invalid">
@@ -231,6 +223,6 @@ const FormPart = (props) => {
       </Form.Group>
     </Row>
   );
-};
+});
 
 export default FormPart;
