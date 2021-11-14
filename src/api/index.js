@@ -18,7 +18,18 @@ export const getOutputHistory = async function (name, from, to) {
       `${URL_SRV}/output_history?driver_name=${name}&from=${from}&to=${to}`
     );
 
-    return { data: response.data };
+    return response.data;
+  } catch (error) {
+    console.log(error.response.data);
+    return error.response.data;
+  }
+};
+
+export const getDefaultOutputHistory = async function () {
+  try {
+    let response = await axios.get(`${URL_SRV}/output_history`);
+
+    return response.data;
   } catch (error) {
     console.log(error.response.data);
     return error.response.data;
