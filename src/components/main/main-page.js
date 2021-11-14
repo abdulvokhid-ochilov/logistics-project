@@ -1,9 +1,9 @@
 import HeaderImg from "../../assets/img/KakaoTalk_20210529_182231447.jpg";
-import OutputButtonImg from "../../assets/img/KakaoTalk_20210531_211913798_02.png";
-import InputButtonImg from "../../assets/img/KakaoTalk_20210531_211913798.png";
-import OutputDBImg from "../../assets/img/KakaoTalk_20210531_211913798_03.png";
-import InputDBImg from "../../assets/img/KakaoTalk_20210531_211913798_01.png";
 import FooterImg from "../../assets/img/KakaoTalk_20210531_214254921.png";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const MainPage = () => {
   return (
@@ -11,18 +11,55 @@ const MainPage = () => {
       <img className="capino-img" src={HeaderImg} alt="capino-img" />
 
       <div className="main-page-btns">
-        <a href="/output">
-          <img className="btn-imgs" src={OutputButtonImg} alt="button" />
-        </a>
-        <a href="/input">
-          <img className="btn-imgs" src={InputButtonImg} alt="button" />
-        </a>
-        <a href="/output/outputdb">
-          <img className="btn-imgs" src={OutputDBImg} alt="button" />
-        </a>
-        <a href="/input/inputdb">
-          <img className="btn-imgs" src={InputDBImg} alt="button" />
-        </a>
+        <Container>
+          <Row className="justify-content-md-center">
+            <Col md="auto">
+              <a href="/output">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="btn mb-3 mr-3 btn-success main-page-btn"
+                >
+                  출고
+                </Button>
+              </a>
+            </Col>
+
+            <Col md="auto">
+              <a href="/input">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="btn mb-3 mr-3 btn-success main-page-btn"
+                >
+                  입고
+                </Button>
+              </a>
+            </Col>
+            <Col md="auto">
+              <a href="/output/outputdb">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="btn mb-3 mr-3 btn-success main-page-btn"
+                >
+                  출고 조회
+                </Button>
+              </a>
+            </Col>
+            <Col md="auto">
+              <a href="/input/inputdb">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="btn mb-3 mr-3 btn-success main-page-btn"
+                >
+                  입고 조회
+                </Button>
+              </a>
+            </Col>
+          </Row>
+        </Container>
       </div>
       <div className="main-footer">
         <img className="logo-img" src={FooterImg} alt="footer" />
