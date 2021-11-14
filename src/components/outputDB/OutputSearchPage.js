@@ -30,6 +30,25 @@ const OutputSearchPage = () => {
     }
   }, []);
 
+  const initial = useRef(true);
+  useEffect(() => {
+    if (initial.current) {
+      initial.current = false;
+    } else {
+      if (outputHistory.length === 0) {
+        toast.error("Data has not been found in the database", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    }
+  }, [outputHistory]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -42,17 +61,7 @@ const OutputSearchPage = () => {
     );
     console.log(value.data);
     setOutputHistory(value.data);
-    if (outputHistory.length === 0) {
-      toast.error("Data has not been found in the database", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    }
+
     setLoading(false);
   };
 

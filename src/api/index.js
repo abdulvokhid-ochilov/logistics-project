@@ -42,7 +42,18 @@ export const getInputHistory = async function (name, from, to) {
       `${URL_SRV}/input_history?driver_name=${name}&from=${from}&to=${to}`
     );
 
-    return { data: response.data };
+    return response.data;
+  } catch (error) {
+    console.log(error.response.data);
+    return error.response.data;
+  }
+};
+
+export const getDefaultInputHistory = async function () {
+  try {
+    let response = await axios.get(`${URL_SRV}/input_history`);
+
+    return response.data;
   } catch (error) {
     console.log(error.response.data);
     return error.response.data;
