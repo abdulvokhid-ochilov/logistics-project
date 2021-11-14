@@ -122,7 +122,8 @@ export const postInput = async function (data) {
     console.log(response);
     return response.data;
   } catch (error) {
-    return "404";
+    console.log(error.response.data);
+    return error.response.data;
   }
 };
 

@@ -15,6 +15,8 @@ function InputForm() {
   const [numberOfRows, setNumberOfRows] = useState(1);
   const [message, setMessage] = useState();
 
+  const form = useRef();
+
   const formRows = [];
 
   const initialRender = useRef(true);
@@ -23,25 +25,29 @@ function InputForm() {
     if (initialRender.current) {
       initialRender.current = false;
     } else {
-      message === "success"
-        ? toast.success("Data is successfully saved!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          })
-        : toast.error("Something went wrong!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+      console.log(message);
+      if (message.status === "success") {
+        form.current.reset();
+        toast.success(message.message, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else if (message.status === "fail") {
+        toast.error(message.message, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     }
   }, [message]);
 
@@ -94,9 +100,7 @@ function InputForm() {
 
     const status = await postInput(inputData);
 
-    setMessage(status.status);
-    // console.log(event);
-    event.target.reset();
+    setMessage(status);
   };
 
   return (
@@ -115,7 +119,7 @@ function InputForm() {
       />
       <Container>
         <h1 className="page-heading">입고 요청서</h1>
-        <Form onSubmit={HandleSubmit} id="Input">
+        <Form onSubmit={HandleSubmit} id="Input" ref={form}>
           <FormContactPart />
 
           <Container className="bottom-form shadow">
