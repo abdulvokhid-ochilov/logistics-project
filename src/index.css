@@ -2,6 +2,23 @@
   width: 100%;
 }
 
+.print-button-cont {
+  position: absolute;
+  top: 40%;
+  right: 5%;
+}
+
+/* .sticky-button {
+  position: sticky;
+  top: 10px;
+} */
+
+.loading-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
 .input-print-container p {
   margin: 0;
 }
@@ -978,7 +995,7 @@ a {
 /* INPUT PRINT PAGE */
 
 .print-container {
-  height: 297mm;
+  /* height: 297mm; */
   width: 100%;
   display: flex;
   flex-direction: column;

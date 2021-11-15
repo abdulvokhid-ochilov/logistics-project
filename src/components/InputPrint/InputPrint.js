@@ -1,18 +1,21 @@
 import { useParams } from "react-router-dom";
 import { getInputQRCode } from "../../api/index";
 import Table from "./Table";
-import Hypnosis from "react-cssfx-loading/lib/Hypnosis";
-import { useState, useEffect } from "react";
+import { Ring } from "react-awesome-spinners";
+import { useState, useEffect, useRef } from "react";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import ReactToPrint from "react-to-print";
 
 const InputPrint = (props) => {
   const [data, setData] = useState();
   const { id } = useParams();
+  let printRef = useRef();
 
   useEffect(() => {
     const apiCall = async () => {
       const qr = await getInputQRCode(id);
       setData(qr.data);
-      // console.log(qr);
     };
 
     apiCall();
@@ -21,7 +24,7 @@ const InputPrint = (props) => {
   console.log(data);
   return data ? (
     <>
-      <div className="print-container">
+      <div ref={(el) => (printRef = el)} className="print-container">
         <div className="input-print-container">
           <div className="input-print-heading">
             <p>[보관용]</p>
@@ -72,18 +75,25 @@ const InputPrint = (props) => {
         </div>
       </div>
 
-      {/* <div className="print-btn-container">
-        <button className="print-btn">출고증인쇄</button>
-      </div> */}
+      <div className="print-button-cont">
+        <ReactToPrint
+          trigger={() => (
+            <Button
+              variant="primary"
+              type="submit"
+              className="btn mb-3 mr-3 btn-success"
+            >
+              출고증인쇄
+            </Button>
+          )}
+          content={() => printRef}
+        />
+      </div>
     </>
   ) : (
-    <Hypnosis
-      style={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-      }}
-    />
+    <Container className="loading-container">
+      <Ring />
+    </Container>
   );
 };
 

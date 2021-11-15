@@ -1,19 +1,22 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getOutputQRCode } from "../../api/index";
 import TopTable from "./TopTable";
 import BottomTable from "./BottomTable";
-import Hypnosis from "react-cssfx-loading/lib/Hypnosis";
+import { Ring } from "react-awesome-spinners";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import ReactToPrint from "react-to-print";
 
 const OutputPrint = (props) => {
   const [data, setData] = useState();
   const { id } = useParams();
+  let printRef = useRef();
 
   useEffect(() => {
     const apiCall = async () => {
       const qr = await getOutputQRCode(id);
       setData(qr.data);
-      // console.log(qr);
     };
 
     apiCall();
@@ -23,8 +26,8 @@ const OutputPrint = (props) => {
 
   return data ? (
     <>
-      <div class="print-container">
-        <div class="output-print-container">
+      <div ref={(el) => (printRef = el)} className="print-container">
+        <div className="output-print-container">
           <TopTable qr={data.transaction_info.qr} />
           <p>[보관용]</p>
           <BottomTable
@@ -35,7 +38,7 @@ const OutputPrint = (props) => {
           />
         </div>
 
-        <div class="output-print-container">
+        <div className="output-print-container">
           <TopTable qr={data.transaction_info.qr} />
           <p>[검수용]</p>
           <BottomTable
@@ -57,18 +60,26 @@ const OutputPrint = (props) => {
           />
         </div>
       </div>
-      {/* <div class="print-btn-container">
-        <button class="print-btn">출고증인쇄</button>
-      </div> */}
+
+      <div className="print-button-cont">
+        <ReactToPrint
+          trigger={() => (
+            <Button
+              variant="primary"
+              type="submit"
+              className="btn mb-3 mr-3 btn-success"
+            >
+              출고증인쇄
+            </Button>
+          )}
+          content={() => printRef}
+        />
+      </div>
     </>
   ) : (
-    <Hypnosis
-      style={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-      }}
-    />
+    <Container className="loading-container">
+      <Ring />
+    </Container>
   );
 };
 
