@@ -1,9 +1,6 @@
 import Logo from "../../assets/img/KakaoTalk_20210531_214254921.png";
 
-
 const Header = () => {
-  
-
   return (
     <header id="header" class="d-flex align-items-center">
       <div class="container d-flex align-items-center justify-content-between">
@@ -60,7 +57,7 @@ const Header = () => {
                 입고 조회
               </a>
             </li>
-            <li>
+            {/* <li>
               <a
                 className={`nav-link scrollto ${
                   window.location.pathname === "/guide" && "active"
@@ -69,7 +66,7 @@ const Header = () => {
               >
                 QR 사용법
               </a>
-            </li>
+            </li> */}
           </ul>
           <i className="bi bi-list mobile-nav-toggle"></i>
         </nav>

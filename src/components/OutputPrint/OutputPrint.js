@@ -26,40 +26,42 @@ const OutputPrint = (props) => {
 
   return data ? (
     <>
-      <div ref={(el) => (printRef = el)} className="print-container">
-        <div className="output-print-container">
-          <TopTable qr={data.transaction_info.qr} />
-          <p>[보관용]</p>
-          <BottomTable
-            products={data.product_info}
-            driver_name={data.transaction_info.driver_name}
-            car_num={data.transaction_info.car_num}
-            phone_num={data.transaction_info.phone_num}
-          />
-        </div>
+      <Container className="print-page">
+        <div ref={(el) => (printRef = el)} className="print-container">
+          <div className="output-print-container">
+            <TopTable qr={data.transaction_info.qr} />
+            <p>[보관용]</p>
+            <BottomTable
+              products={data.product_info}
+              driver_name={data.transaction_info.driver_name}
+              car_num={data.transaction_info.car_num}
+              phone_num={data.transaction_info.phone_num}
+            />
+          </div>
 
-        <div className="output-print-container">
-          <TopTable qr={data.transaction_info.qr} />
-          <p>[검수용]</p>
-          <BottomTable
-            products={data.product_info}
-            driver_name={data.transaction_info.driver_name}
-            car_num={data.transaction_info.car_num}
-            phone_num={data.transaction_info.phone_num}
-          />
-        </div>
+          <div className="output-print-container">
+            <TopTable qr={data.transaction_info.qr} />
+            <p>[검수용]</p>
+            <BottomTable
+              products={data.product_info}
+              driver_name={data.transaction_info.driver_name}
+              car_num={data.transaction_info.car_num}
+              phone_num={data.transaction_info.phone_num}
+            />
+          </div>
 
-        <div className="output-print-container">
-          <TopTable qr={data.transaction_info.qr} />
-          <p>[차량용]</p>
-          <BottomTable
-            products={data.product_info}
-            driver_name={data.transaction_info.driver_name}
-            car_num={data.transaction_info.car_num}
-            phone_num={data.transaction_info.phone_num}
-          />
+          <div className="output-print-container">
+            <TopTable qr={data.transaction_info.qr} />
+            <p>[차량용]</p>
+            <BottomTable
+              products={data.product_info}
+              driver_name={data.transaction_info.driver_name}
+              car_num={data.transaction_info.car_num}
+              phone_num={data.transaction_info.phone_num}
+            />
+          </div>
         </div>
-      </div>
+      </Container>
 
       <div className="print-button-cont">
         <ReactToPrint

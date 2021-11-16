@@ -4,8 +4,8 @@
 
 .print-button-cont {
   position: absolute;
-  top: 40%;
-  right: 5%;
+  top: 400px;
+  left: 20px;
 }
 
 /* .sticky-button {
@@ -408,7 +408,7 @@
   box-sizing: border-box;
 }
 body {
-  max-width: 100vw;
+  min-width: 100vw;
   min-height: 100vh;
   font-family: "Gothic A1", sans-serif;
   font-size: 16px;
@@ -578,7 +578,7 @@ a {
 
 /********* OUT-INP-PAGE***********/
 .page-heading {
-  width: var(--main-width);
+  /* width: var(--main-width); */
   font-size: 2rem;
   margin: 2rem 0;
 }
@@ -994,8 +994,11 @@ a {
 }
 /* INPUT PRINT PAGE */
 
+.print-page {
+  min-width: 1200px;
+}
+
 .print-container {
-  /* height: 297mm; */
   width: 100%;
   display: flex;
   flex-direction: column;
