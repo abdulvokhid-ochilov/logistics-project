@@ -1,5 +1,5 @@
 import axios from "axios";
-const URL_SRV = "http://18.216.201.29:3000/api/v1";
+const URL_SRV = "http://18.216.253.113:3000/api/v1";
 
 export const getProductByNum = async function (num) {
   try {
